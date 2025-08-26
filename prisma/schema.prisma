@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+  PENDING
+}
+
+model User {
+  id             String           @id @default(uuid())
+  name           String
+  email          String           @unique
+  password       String?
+  role           Role             @default(USER)
+  favorites      String[]         @default([])
+  recentSearches Json?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  bookings       Booking[]
+  reviews        Review[]
+}
+
+model City {
+  id          String     @id @default(uuid())
+  name        String
+  imageUrl    String?
+  description String?
+  hotelsCount Int        @default(0)
+  createdAt   DateTime   @default(now())
+
+  hotels      Hotel[]
+  attractions Visitor[]
+}
+
+model Hotel {
+  id            String     @id @default(uuid())
+  name          String
+  image         String
+  location      String
+  rating        Float      @default(0)
+  reviewsCount  Int        @default(0)
+  price         Float
+  originalPrice Float?
+  amenities     String[]   @default([])
+  distance      String?
+  deal          String?
+  description   String?
+  images        String[]   @default([])
+  createdAt     DateTime   @default(now())
+
+  cityId String?
+  city   City?     @relation(fields: [cityId], references: [id])
+
+  rooms    Room[]
+  reviews  Review[]
+  bookings Booking[]
+}
+
+model Room {
+  id            String   @id @default(uuid())
+  name          String
+  price         Float
+  originalPrice Float?
+  capacity      Int
+  amenities     String[] @default([])
+  image         String
+
+  hotelId String
+  hotel   Hotel @relation(fields: [hotelId], references: [id])
+
+  bookings Booking[]
+}
+
+model Booking {
+  id         String        @id @default(uuid())
+  checkIn    DateTime
+  checkOut   DateTime
+  guests     Int
+  totalPrice Float
+  status     BookingStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  hotelId String
+  hotel   Hotel  @relation(fields: [hotelId], references: [id])
+
+  roomId String
+  room   Room   @relation(fields: [roomId], references: [id])
+}
+
+model Review {
+  id      String   @id @default(uuid())
+  rating  Int
+  comment String
+  date    DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  hotelId String
+  hotel   Hotel  @relation(fields: [hotelId], references: [id])
+}
+
+model Visitor {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  imageUrl    String?
+  location    String
+  createdAt   DateTime @default(now())
+
+  cityId String
+  city   City @relation(fields: [cityId], references: [id])
+}
