@@ -1,3 +1,4 @@
+import { number } from "zod";
 import { prisma } from "../lib/prisma";
 
 export interface CreateCityParams {
@@ -11,7 +12,6 @@ export const CityService = {
     return prisma.city.create({
       data: {
         name: data.name,
-        province: data.province,
         description: data.description ?? null,
       },
     });
@@ -21,22 +21,21 @@ export const CityService = {
     return prisma.city.findMany();
   },
 
-  async findById(id: number) {
+  async findById(id: string) {
     return prisma.city.findUnique({ where: { id } });
   },
 
-  async update(id: number, data: CreateCityParams) {
+  async update(id: string, data: CreateCityParams) {
     return prisma.city.update({
       where: { id },
       data: {
         name: data.name,
-        province: data.province,
         description: data.description ?? null,
       },
     });
   },
 
-  async delete(id: number) {
+  async delete(id: string) {
     return prisma.city.delete({ where: { id } });
   },
 };

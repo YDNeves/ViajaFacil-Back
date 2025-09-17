@@ -35,19 +35,18 @@ model User {
 
 model City {
   id          String     @id @default(uuid())
-  name        String
+  name        String     @unique
   imageUrl    String?
-  description String?
+  description String?    @unique
   hotelsCount Int        @default(0)
   createdAt   DateTime   @default(now())
 
   hotels      Hotel[]
-  attractions Visitor[]
 }
 
 model Hotel {
   id            String     @id @default(uuid())
-  name          String
+  name          String     @unique
   image         String
   location      String
   rating        Float      @default(0)
@@ -116,14 +115,3 @@ model Review {
   hotel   Hotel  @relation(fields: [hotelId], references: [id])
 }
 
-model Visitor {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  imageUrl    String?
-  location    String
-  createdAt   DateTime @default(now())
-
-  cityId String
-  city   City @relation(fields: [cityId], references: [id])
-}

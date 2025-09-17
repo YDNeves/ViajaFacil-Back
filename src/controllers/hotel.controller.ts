@@ -51,7 +51,7 @@ export class HotelController {
     return reply.code(204).send();
   }
 
-  static async listByDestination(req: FastifyRequest, reply: FastifyReply) {
+  /* static async listByDestination(req: FastifyRequest, reply: FastifyReply) {
     const params = z.object({ destinationId: z.string().uuid() }).parse(req.params);
     const hotels = await HotelService.listByDestination(params.destinationId);
     return reply.send(hotels);
@@ -69,5 +69,5 @@ export class HotelController {
     const userId = (req.user as any).sub as string;
     const result = await HotelService.removeFavorite(userId, params.id);
     return reply.send({ favorites: result.favorites });
-  }
+  } */
 }

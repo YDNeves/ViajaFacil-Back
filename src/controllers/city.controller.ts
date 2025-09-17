@@ -28,7 +28,7 @@ export const CityController = {
     reply: FastifyReply
   ) {
     try {
-      const city = await CityService.findById(Number(request.params.id));
+      const city = await CityService.findById(request.params.id);
 
       if (!city) {
         return reply.code(404).send({ error: "Cidade não encontrada" });
@@ -45,7 +45,7 @@ export const CityController = {
     reply: FastifyReply
   ) {
     try {
-      const updated = await CityService.update(Number(request.params.id), request.body);
+      const updated = await CityService.update(request.params.id, request.body);
       return reply.send(updated);
     } catch {
       return reply.code(500).send({ error: "Erro ao atualizar cidade" });
@@ -57,7 +57,7 @@ export const CityController = {
     reply: FastifyReply
   ) {
     try {
-      await CityService.delete(Number(request.params.id));
+      await CityService.delete(request.params.id);
       return reply.code(204).send();
     } catch {
       return reply.code(500).send({ error: "Erro ao excluir cidade" });

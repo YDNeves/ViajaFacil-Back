@@ -23,16 +23,13 @@ export class HotelService {
   }
 
   static list(): Promise<Hotel[]> {
-    return prisma.hotel.findMany({
-      include: { destination: true },
-      orderBy: { name: "asc" }
-    });
+    return prisma.hotel.findMany();
   }
 
   static findById(id: string) {
     return prisma.hotel.findUnique({
       where: { id },
-      include: { rooms: true, destination: true, reviews: true }
+      include: { rooms: true, reviews: true }
     });
   }
 
@@ -44,15 +41,15 @@ export class HotelService {
     return prisma.hotel.delete({ where: { id } });
   }
 
-  static listByDestination(destinationId: string) {
+ /*  static listByDestination(destinationId: string) {
     return prisma.hotel.findMany({
       where: { destinationId },
       include: { rooms: true },
       orderBy: { name: "asc" }
     });
-  }
+  } */
 
-  static toggleFavorite(userId: string, hotelId: string) {
+  /* static toggleFavorite(userId: string, hotelId: string) {
     return prisma.user.update({
       where: { id: userId },
       data: {
@@ -60,9 +57,9 @@ export class HotelService {
       },
       include: { favorites: true }
     });
-  }
+  } */
 
-  static removeFavorite(userId: string, hotelId: string) {
+  /* static removeFavorite(userId: string, hotelId: string) {
     return prisma.user.update({
       where: { id: userId },
       data: {
@@ -70,5 +67,5 @@ export class HotelService {
       },
       include: { favorites: true }
     });
-  }
+  } */
 }

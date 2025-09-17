@@ -3,22 +3,34 @@ import { z } from "zod";
 import { BookingService } from "../services/booking.service.js";
 
 const createSchema = z.object({
-  userId: z.string().uuid(),
   hotelId: z.string().uuid(),
-  roomId: z.string().uuid(),
+  // roomId foi removido
   checkIn: z.coerce.date(),
   checkOut: z.coerce.date(),
   guests: z.number().int().positive(),
-  totalPrice: z.number().positive()
+  totalPrice: z.number().positive(),
 });
+
+// O restante dos schemas e métodos do controller permanecem os mesmos
 const idSchema = z.object({ id: z.string().uuid() });
 const statusSchema = z.object({ status: z.enum(["CONFIRMED", "CANCELLED", "PENDING"]) });
 const byUserSchema = z.object({ userId: z.string().uuid() });
 
 export class BookingController {
   static async create(req: FastifyRequest, reply: FastifyReply) {
-    const data = createSchema.parse(req.body);
-    const booking = await BookingService.create(data);
+    // Agora parseamos os dados simplificados
+    const { hotelId, checkIn, checkOut, guests, totalPrice } = createSchema.parse(req.body);
+    const userId = (req.user as any).id;
+
+    // Chamamos o serviço com os dados simplificados
+    const booking = await BookingService.create({
+      hotelId,
+      checkIn,
+      checkOut,
+      guests,
+      totalPrice,
+      userId,
+    });
     return reply.code(201).send(booking);
   }
 

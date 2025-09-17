@@ -5,7 +5,6 @@ import { ReviewService } from "../services/review.service.js";
 const createSchema = z.object({
   rating: z.number().min(0).max(5),
   comment: z.string().min(1),
-  userId: z.string().uuid(),
   hotelId: z.string().uuid()
 });
 const byHotelSchema = z.object({ hotelId: z.string().uuid() });
@@ -14,7 +13,11 @@ const byUserSchema = z.object({ userId: z.string().uuid() });
 export class ReviewController {
   static async create(req: FastifyRequest, reply: FastifyReply) {
     const data = createSchema.parse(req.body);
-    const review = await ReviewService.create(data);
+    const userId = (req.user as any).id;
+    const review = await ReviewService.create({
+      ...data,
+      userId
+          });
     return reply.code(201).send(review);
   }
 
