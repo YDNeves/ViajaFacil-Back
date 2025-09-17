@@ -1,16 +1,16 @@
 {
-  "name": "teste",
+  "name": "viajafacil",
   "version": "1.0.0",
-  "description": "",
+  "description": "api do viajafacil",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "seed": "node --loader ts-node/esm src/prisma/seeds/seed.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js"
-  },
+  "build": "npx prisma generate && tsc",
+  "start": "node dist/index.js",
+  "seed": "node --loader ts-node/esm src/prisma/seeds/seed.ts",
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "dev": "tsx watch src/index.ts"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
