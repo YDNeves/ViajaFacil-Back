@@ -1,9 +1,10 @@
+import 'dotenv/config';
 import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import cors from '@fastify/cors';
 import jwtPlugin from '@fastify/jwt';
 import rateLimit from '@fastify/rate-limit';
 import helmet from '@fastify/helmet';
-import { env } from './config/env';
+import env from './config/env.js';
 import { logger } from './config/logger';
 import { prisma } from './lib/prisma';
 import { registerRoutes } from './routes/index';

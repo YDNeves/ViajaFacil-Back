@@ -5,13 +5,12 @@
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
-  "build": "prisma generate && tsc",
-  "start": "node dist/server.js",
-  "seed": "node --loader ts-node/esm src/prisma/seeds/seed.ts",
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "dev": "tsx watch src/index.ts",
-  "postinstall": "prisma generate && prisma migrate deploy && prisma db seed"
-},
+    "build": "prisma generate && tsc",
+    "start": "node ./dist/server.js",
+    "seed": "node --loader ts-node/esm src/prisma/seeds/seed.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch src/index.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

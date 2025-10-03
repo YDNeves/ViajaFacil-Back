@@ -4,7 +4,7 @@ import { z } from 'zod';
 config();
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production']).default('development'),
+  NODE_ENV: z.enum(['development', 'production']).default('production'),
   DATABASE_URL: z.string().url(),
   JWT_SECRET: z.string().min(10, "JWT_SECRET precisa ter pelo menos 10 caracteres"),
   JWT_EXPIRES_IN: z.string().default("1d"), // força para string
@@ -12,4 +12,5 @@ const envSchema = z.object({
   CORS_ORIGIN: z.string().url(),
 });
 
-export const env = envSchema.parse(process.env);
+const env = envSchema.parse(process.env);
+export default env;

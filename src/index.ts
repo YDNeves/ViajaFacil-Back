@@ -1,5 +1,5 @@
 import app from './server';
-import { env } from './config/env';
+import  env  from './config/env.js';
 
 const start = async () => {
   try {
@@ -12,3 +12,4 @@ const start = async () => {
 };
 
 start();
+//"postinstall": "prisma generate && prisma migrate deploy && prisma db seed"
