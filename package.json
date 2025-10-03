@@ -2,7 +2,7 @@
   "name": "viajafacil",
   "version": "1.0.0",
   "description": "api do viajafacil",
-  "main": "dist/server.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "build": "prisma generate && tsc",
