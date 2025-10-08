@@ -5,13 +5,6 @@ const prisma = new PrismaClient();
 await prisma.user.deleteMany();
 
 async function main() {
-  console.log("Iniciando o processo de seeding..."); 
- console.log("Limpando dados existentes...");
- await prisma.booking.deleteMany(); 
- await prisma.room.deleteMany();
- await prisma.hotel.deleteMany();
- await prisma.city.deleteMany();
- await prisma.user.deleteMany();
 
  console.log("Dados antigos limpos. Começando a criação...");
   const luanda = await prisma.city.create({
